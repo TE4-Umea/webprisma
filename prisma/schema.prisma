@@ -17,6 +17,7 @@ model Product {
   quantity  Int
   sizes     String
   categories CategoriesOnProducts[]
+  shoppingcart ShoppingCart[]
 }
 
 model User {
@@ -42,11 +43,18 @@ model CategoriesOnProducts {
   @@id([productId, categoryId])
 }
 
-//model shoppingcart {
+model ShoppingCart {
+  product       Product     @relation(fields: [productId], references: [id])
+  productId     Int // relation scalar field (used in the `@relation` attribute above)
+  orders Orders[]
 
-//}
+  @@id([productId])
+}
 
-//model orders {
- 
-//} 
+model Orders {
+  shoppingcart ShoppingCart @relation(fields: [productId], references: [productId] )
+  productId Int
+
+  @@id([productId])
+} 
 
