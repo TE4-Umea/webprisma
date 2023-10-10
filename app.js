@@ -5,9 +5,9 @@ const prisma = new PrismaClient()
 const cors = require('cors')
 
 app.use(cors())
- 
+
 app.get('/', async function (req, res) {
-    res.json ({
+    res.json({
     })
 })
 
