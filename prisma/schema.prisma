@@ -10,15 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Items {
+model Product {
   id        Int      @id @default(autoincrement())
   name      String
   price     Int
   quantity  Int
   sizes     String
+  categories CategoriesOnProducts[]
 }
 
-model Users {
+model User {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
@@ -26,26 +27,26 @@ model Users {
   role      String
 }
 
-model catagory {
+model Category {
   id        Int      @id @default(autoincrement())
   name      String
+  products CategoriesOnProducts[]
 }
 
-model shoppingcart {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Int
-  quantity  Int
-  sizes     String
-  userId    Int
+model CategoriesOnProducts {
+  product       Product     @relation(fields: [productId], references: [id])
+  productId     Int // relation scalar field (used in the `@relation` attribute above)
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int // relation scalar field (used in the `@relation` attribute above)
+
+  @@id([productId, categoryId])
 }
 
-model orders {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Int
-  quantity  Int
-  sizes     String
-  userId    Int
-} 
+//model shoppingcart {
+
+//}
+
+//model orders {
+ 
+//} 
 

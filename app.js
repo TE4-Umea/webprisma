@@ -8,7 +8,7 @@ app.use(cors())
  
 app.get('/', async function (req, res) {
 
-    await prisma.Items.create ({
+    await prisma.Product.create ({
         data: {
             id : 1,
             name: 'Item 1',
