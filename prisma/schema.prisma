@@ -11,32 +11,32 @@ datasource db {
 }
 
 model Product {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Int
-  quantity  Int
-  sizes     String
-  categories CategoriesOnProducts[]
+  id           Int                    @id @default(autoincrement())
+  name         String
+  price        Int
+  quantity     Int
+  sizes        String
+  categories   CategoriesOnProducts[]
   shoppingcart ShoppingCart[]
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  role      String
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     String
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  name      String
+  id       Int                    @id @default(autoincrement())
+  name     String
   products CategoriesOnProducts[]
 }
 
 model CategoriesOnProducts {
-  product       Product     @relation(fields: [productId], references: [id])
-  productId     Int // relation scalar field (used in the `@relation` attribute above)
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int // relation scalar field (used in the `@relation` attribute above)
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int // relation scalar field (used in the `@relation` attribute above)
 
@@ -44,17 +44,16 @@ model CategoriesOnProducts {
 }
 
 model ShoppingCart {
-  product       Product     @relation(fields: [productId], references: [id])
-  productId     Int // relation scalar field (used in the `@relation` attribute above)
-  orders Orders[]
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int // relation scalar field (used in the `@relation` attribute above)
+  orders    Orders[]
 
   @@id([productId])
 }
 
 model Orders {
-  shoppingcart ShoppingCart @relation(fields: [productId], references: [productId] )
-  productId Int
+  shoppingcart ShoppingCart @relation(fields: [productId], references: [productId])
+  productId    Int
 
   @@id([productId])
-} 
-
+}
