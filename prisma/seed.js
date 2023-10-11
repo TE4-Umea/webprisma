@@ -15,10 +15,10 @@ async function main() {
             category: {
               connectOrCreate: {
                 create: {
-                  name: 'Tröja',
+                  name: 'Man',
                 },
                 where: {
-                  name: 'Tröja',
+                  name: 'Man',
                 },
               },
             },
@@ -27,10 +27,10 @@ async function main() {
             category: {
               connectOrCreate: {
                 create: {
-                  name: 'Nytt',
+                  name: 'Tröjor',
                 },
                 where: {
-                  name: 'Nytt',
+                  name: 'Tröjor',
                 },
               },
             },
