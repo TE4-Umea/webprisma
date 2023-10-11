@@ -16,6 +16,7 @@ model Product {
   price        Int
   quantity     Int
   sizes        String
+  description  String
   categories   CategoriesOnProducts[]
   shoppingcart ShoppingCart[]
 }
