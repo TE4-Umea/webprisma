@@ -40,11 +40,9 @@ async function main() {
                     ],
                 },
             },
-
         })
+        console.log({ product })
     }
-
-    console.log({ product })
 }
 
 main()
