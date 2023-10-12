@@ -1,59 +1,59 @@
 const { PrismaClient } = require('@prisma/client')
-
 const prisma = new PrismaClient()
 
-async function main() {
-    for (let i = 0; i < 100; i++) {
-        const product = await prisma.product.create({
-            data: {
-                name: `Product ${i}`,
-                description: 'Fortnite Tröja',
-                price: Math.random() * 1000,
-                quantity: Math.random() * 10,
-                sizes : 'M',
-                categories: {
-                    create: [
-                        {
-                            category: {
-                                connectOrCreate: {
-                                    create: {
-                                        name: 'Man',
-                                    },
-                                    where: {
-                                        name: 'Man',
-                                    },
-                                },
-                            },
-                        },
-                        {
-                            category: {
-                                connectOrCreate: {
-                                    create: {
-                                        name: 'Tröjor',
-                                    },
-                                    where: {
-                                        name: 'Tröjor',
-                                    },
-                                },
-                            },
-                        },
-                    ],
-                },
+const { faker } = require('@faker-js/faker')
+
+function randomProduct() {
+  return {
+    name: faker.commerce.productName(),
+    description: faker.commerce.productDescription(),
+    price: Number(faker.commerce.price()),
+    quanity: Number(faker.commerce.quanity()),
+    image: faker.image.urlPicsumPhotos({
+      grayscale: true,
+      height: 256,
+      width: 256,
+    }),
+    categories: {
+      create: [
+        {
+          category: {
+            connectOrCreate: {
+              create: {
+                name: faker.commerce.product(),
+              },
+              where: {
+                name: faker.commerce.product(),
+              },
             },
-        })
-        console.log({ product })
+          },
+        },
+      ],
+    },
+  }
+}
+
+async function main() {
+  for (let i = 0; i < 100; i++) {
+    try {
+      await prisma.product.create({
+        data: randomProduct(),
+      })
+    } catch (e) {
+      console.error(e)
     }
+  }
 }
 
 main()
-    .then(async () => {
-        await prisma.$disconnect()
-    })
+  .then(async () => {
+    await prisma.$disconnect()
+  })
 
-    .catch(async (e) => {
-        console.error(e)
+  .catch(async (e) => {
+    console.error(e)
 
-        await prisma.$disconnect()
+    await prisma.$disconnect()
 
-        process.exit(1)
-    })
+    process.exit(1)
+  })

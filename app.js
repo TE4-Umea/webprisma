@@ -18,7 +18,7 @@ app.get('/product', async function (req, res) {
     skip: (Number(page) - 1) * Number(perPage),
     take: Number(perPage),
     include: {
-      categories: true,
+        categories: { include: { category: true } },
     },
   })
 
