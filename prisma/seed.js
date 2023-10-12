@@ -5,7 +5,6 @@ const prisma = new PrismaClient()
 async function main() {
     const product = await prisma.product.create({
         data: {
-            id: 1,
             name: 'Fortnite Tröja',
             description: 'Fortnite Tröja',
             price: 39,

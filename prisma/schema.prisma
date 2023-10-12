@@ -12,7 +12,7 @@ datasource db {
 
 model Product {
   id           Int                    @id @default(autoincrement())
-  name         String
+  name         String   @unique
   price        Int
   quantity     Int
   sizes        String
@@ -23,7 +23,7 @@ model Product {
 
 model User {
   id       Int    @id @default(autoincrement())
-  name     String
+  name     String 
   email    String @unique
   password String
   role     String
@@ -31,7 +31,7 @@ model User {
 
 model Category {
   id       Int                    @id @default(autoincrement())
-  name     String
+  name     String   @unique
   products CategoriesOnProducts[]
 }
 
