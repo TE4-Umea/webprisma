@@ -9,6 +9,7 @@ function randomProduct() {
     description: faker.commerce.productDescription(),
     price: Number(faker.commerce.price()),
     quanity: Number(faker.commerce.quanity()),
+    size: faker.commerce.size(),
     image: faker.image.urlPicsumPhotos({
       grayscale: true,
       height: 256,
