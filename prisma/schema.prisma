@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,42 +7,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Items {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Int
-  quantity  Int
-  sizes     String
+model Product {
+  id           Int                    @id @default(autoincrement())
+  name         String   @unique
+  price        Int
+  quantity     Int
+  sizes        String
+  description  String
+  categories   CategoriesOnProducts[]
+  shoppingcart ShoppingCart[]
 }
 
-model Users {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  role      String
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String 
+  email    String @unique
+  password String
+  role     String
 }
 
-model catagory {
-  id        Int      @id @default(autoincrement())
-  name      String
+model Category {
+  id       Int                    @id @default(autoincrement())
+  name     String   @unique
+  products CategoriesOnProducts[]
 }
 
-model shoppingcart {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Int
-  quantity  Int
-  sizes     String
-  userId    Int
+model CategoriesOnProducts {
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int // relation scalar field (used in the `@relation` attribute above)
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int // relation scalar field (used in the `@relation` attribute above)
+
+  @@id([productId, categoryId])
 }
 
-model orders {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Int
-  quantity  Int
-  sizes     String
-  userId    Int
-} 
+model ShoppingCart {
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int // relation scalar field (used in the `@relation` attribute above)
+  orders    Orders[]
 
+  @@id([productId])
+}
+
+model Orders {
+  shoppingcart ShoppingCart @relation(fields: [productId], references: [productId])
+  productId    Int
+
+  @@id([productId])
+}
