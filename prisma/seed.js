@@ -8,8 +8,7 @@ function randomProduct() {
     name: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
     price: Number(faker.commerce.price()),
-    quanity: Number(faker.commerce.quanity()),
-    size: faker.commerce.size(),
+    sizes: "Large",
     image: faker.image.urlPicsumPhotos({
       grayscale: true,
       height: 256,
